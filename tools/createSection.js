@@ -77,13 +77,14 @@ const createSection = () => {
   const themeDir = fs.existsSync("./theme") ? "theme" : "theme-base";
   const sectionFile = `./${themeDir}/sections/${args.name}.liquid`;
   const stylesContent = `.${args.name} {\n\n}`;
-  const stylesBase = "./src/styles/theme.scss";
+  // const stylesBase = "./src/styles/theme.scss";
   let styleInclude = "";
   let stylesFile = "";
 
   if (args.folder) {
     styleInclude = `\n@import './sections/${args.folder}/${args.name}';`;
-    stylesFile = `./src/styles/sections/${args.folder}/_${args.name}.scss`;
+    // stylesFile = `./src/styles/sections/${args.folder}/_${args.name}.scss`;
+    stylesFile = `./${themeDir}/assets/${args.name}.css`;
     fs.mkdir(
       `./src/styles/sections/${args.folder}`,
       { recursive: true },
@@ -93,7 +94,8 @@ const createSection = () => {
     );
   } else {
     styleInclude = `\n@import './sections/${args.name}';`;
-    stylesFile = `./src/styles/sections/_${args.name}.scss`;
+    // stylesFile = `./src/styles/sections/_${args.name}.scss`;
+    stylesFile = `./${themeDir}/assets/${args.name}.css`;
   }
 
   fs.access(sectionFile, fs.F_OK, (err) => {
@@ -116,26 +118,26 @@ const createSection = () => {
     if (err) throw err;
   });
 
-  fs.readFile(stylesBase, "utf8", function (err, data) {
-    if (err) {
-      throw err;
-    }
+  // fs.readFile(stylesBase, "utf8", function (err, data) {
+  //   if (err) {
+  //     throw err;
+  //   }
 
-    const commentIndex = data.indexOf("// Sections 🔛");
-    if (commentIndex === -1) {
-      throw 'Comment "// Sections 🔛" not found in the file';
-    }
+  //   const commentIndex = data.indexOf("// Sections 🔛");
+  //   if (commentIndex === -1) {
+  //     throw 'Comment "// Sections 🔛" not found in the file';
+  //   }
 
-    const beforeComment = data.slice(0, commentIndex + "// Sections 🔛".length); // remove +1 to exclude the newline after the comment
-    const afterComment = data.slice(commentIndex + "// Sections 🔛".length);
+  //   const beforeComment = data.slice(0, commentIndex + "// Sections 🔛".length); // remove +1 to exclude the newline after the comment
+  //   const afterComment = data.slice(commentIndex + "// Sections 🔛".length);
 
-    const newData =
-      beforeComment + "\n" + styleInclude + "\n" + afterComment.trim(); // add a newline before and after the new import
+  //   const newData =
+  //     beforeComment + "\n" + styleInclude + "\n" + afterComment.trim(); // add a newline before and after the new import
 
-    fs.writeFile(stylesBase, newData, function (err) {
-      if (err) throw err;
-    });
-  });
+  //   fs.writeFile(stylesBase, newData, function (err) {
+  //     if (err) throw err;
+  //   });
+  // });
 
   const openFile = async () => {
     // Opens the image in the default image viewer and waits for the opened app to quit.
