@@ -52,16 +52,11 @@ jobs:
 
     - name: Build assets
       run: |
-        # npm run build:assets
-        # git log -1
-        # bash commit-if-not-empty
-        # git log -1
         npm run build:assets
         git log -1
-        chmod +x commit-if-not-empty  # Ensure the script is executable
-        ls -la  # List files to check for the script
-        bash commit-if-not-empty "Update assets"  # Adjust path if needed
+        bash commit-if-not-empty
         git log -1
+
 
     - name: Push production assets
       # Generate production files and push those
